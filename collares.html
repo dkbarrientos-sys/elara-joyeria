@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collares – Elara Life</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <h2 class="logo">Elara Life</h2>
+    <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="coleccion.html">Colección</a></li>
+        <li><a href="buscar.html"><i class="bi bi-search"></i></a></li>
+        <li><a href="favoritos.html"><i class="bi bi-heart"></i></a></li>
+        <li><a href="carrito.html"><i class="bi bi-cart"></i></a></li>
+        <li><a href="perfil.html"><i class="bi bi-person"></i></a></li>
+    </ul>
+</nav>
+
+<header class="header">
+<h1>Collares</h1>
+<p class="sub">Descubre la elegancia en cada pieza</p>
+</header>
+
+<div class="container">
+    <aside class="filtros">
+        <h3>Filtrar por:</h3>
+        <label>Precio</label>
+        <div class="rango">
+            <input type="number" placeholder="Mínimo">
+            <input type="number" placeholder="Máximo">
+        </div>
+        <h4>Material</h4>
+        <ul>
+            <li>Oro</li>
+            <li>Plata</li>
+            <li>Hilo</li>
+            <li>Perlas</li>
+        </ul>
+    </aside>
+
+    <section class="productos">
+        <div class="item" id="collar1">
+            <div class="favorito" onclick="toggleFavorito(this,'Collar dorado con plata','img/collar1.jpg','$380.00')">
+                <i class="bi bi-heart"></i>
+            </div>
+            <img src="img/collar1.jpg">
+            <h2>Collar dorado con plata</h2>
+            <p class="precio">$380.00</p>
+            <button onclick="agregarCarrito('Collar dorado con plata','img/collar1.jpg','$380.00')">Agregar al carrito</button>
+        </div>
+        <div class="item" id="collar2">
+            <div class="favorito" onclick="toggleFavorito(this,'Collar de perlas','img/collar2.avif','$490.00')">
+                <i class="bi bi-heart"></i>
+            </div>
+            <img src="img/collar2.avif">
+            <h2>Collar de perlas</h2>
+            <p class="precio">$490.00</p>
+            <button onclick="agregarCarrito('Collar de perlas','img/collar2.avif','$490.00')">Agregar al carrito</button>
+        </div>
+        <div class="item" id="collar3">
+            <div class="favorito" onclick="toggleFavorito(this,'Collar con dijes','img/collar3.webp','$350.00')">
+                <i class="bi bi-heart"></i>
+            </div>
+            <img src="img/collar3.webp">
+            <h2>Collar con dijes</h2>
+            <p class="precio">$350.00</p>
+            <button onclick="agregarCarrito('Collar con dijes','img/collar3.webp','$350.00')">Agregar al carrito</button>
+        </div>
+        <div class="item" id="collar4">
+            <div class="favorito" onclick="toggleFavorito(this,'Collar de hilo con piedras','img/collar4.jpg','$150.00')">
+                <i class="bi bi-heart"></i>
+            </div>
+            <img src="img/collar4.jpg">
+            <h2>Collar de hilo con piedras</h2>
+            <p class="precio">$150.00</p>
+            <button onclick="agregarCarrito('Collar de hilo con piedras','img/collar4.jpg','$150.00')">Agregar al carrito</button>
+        </div>
+        <div class="item" id="collar5">
+            <div class="favorito" onclick="toggleFavorito(this,'Set de 2 collares','img/collar5.webp','$400.00')">
+                <i class="bi bi-heart"></i>
+            </div>
+            <img src="img/collar5.webp">
+            <h2>Set de 2 collares</h2>
+            <p class="precio">$400.00</p>
+            <button onclick="agregarCarrito('Set de 2 collares','img/collar5.webp','$400.00')">Agregar al carrito</button>
+        </div>
+    </section>
+</div>
+
+<footer style="background:#b894a6; padding: 30px 0; color:white;">
+<div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+<div style="min-width:200px; margin-bottom:20px;">
+<h4>Experiencia del cliente</h4>
+<p><i class="bi bi-send"></i> Contáctanos</p>
+<p><i class="bi bi-whatsapp"></i> WhatsApp</p>
+<p><i class="bi bi-envelope"></i> Mail</p>
+</div>
+<div style="min-width:200px; margin-bottom:20px;">
+<h4>Información</h4>
+<p>Envíos</p>
+<p>Devoluciones</p>
+<p>Preguntas Frecuentes</p>
+</div>
+<div style="min-width:200px; margin-bottom:20px;">
+<h4>ElaraClub</h4>
+<p>Suscríbete</p>
+<p>Bases y Condiciones</p>
+<p>Preguntas frecuentes</p>
+</div>
+<div style="min-width:200px; margin-bottom:20px;">
+<h4>Síguenos</h4>
+<p><i class="bi bi-instagram"></i> @Elara.life</p>
+<p><i class="bi bi-facebook"></i> @Elara.life</p>
+</div>
+</div>
+</footer>
+
+<script>
+// Limpiar precio (quita $, MXN, comas, espacios)
+function limpiarPrecio(texto) {
+    return parseFloat(
+        texto
+        .replace('$', '')
+        .replace('MXN', '')
+        .replace('mxn', '')
+        .replace(/,/g, '')
+        .trim()
+    );
+}
+
+// Favoritos
+function toggleFavorito(elemento, nombre, imagen, precio) {
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    const index = favoritos.findIndex(p => p.nombre === nombre);
+
+    if(index === -1){
+        favoritos.push({nombre, imagen, precio});
+        elemento.classList.add('fav-active');
+    } else {
+        favoritos.splice(index, 1);
+        elemento.classList.remove('fav-active');
+    }
+
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+}
+
+// Carrito
+function agregarCarrito(nombre, imagen, precio){
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    carrito.push({
+        nombre,
+        imagen,
+        precio,
+        cantidad: 1   // ← IMPORTANTE: agrega cantidad por defecto
+    });
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    alert(nombre + " agregado al carrito");
+}
+
+// Mantener estado favoritos al cargar
+window.onload = ()=>{
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+    document.querySelectorAll('.favorito').forEach(fav => {
+        const nombre = fav.getAttribute('onclick').match(/'(.+?)'/)[1];
+
+        if(favoritos.some(p => p.nombre === nombre)){
+            fav.classList.add('fav-active');
+        }
+    });
+};
+</script>
+
+
+</body>
+</html>
