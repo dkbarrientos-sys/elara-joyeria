@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Favoritos – Elara Life</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        .favorito-item {
+            position: relative;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 15px;
+            width: 200px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        .favorito-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .eliminar {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            color: red;
+        }
+        .container-favoritos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <h2 class="logo">Elara Life</h2>
+    <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="coleccion.html">Colección</a></li>
+        <li><a href="buscar.html"><i class="bi bi-search"></i></a></li>
+        <li><a href="favoritos.html"><i class="bi bi-heart"></i></a></li>
+        <li><a href="carrito.html"><i class="bi bi-cart"></i></a></li>
+        <li><a href="perfil.html"><i class="bi bi-person"></i></a></li>
+    </ul>
+</nav>
+
+<h1>Mis Favoritos</h1>
+
+<div class="container-favoritos" id="favoritos-container">
+    <!-- Aquí se cargan los favoritos dinámicamente -->
+</div>
+
+<!-- FOOTER -->
+<footer style="background:#b894a6; padding: 30px 0; color: white;">
+    <div class="container" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+        <div style="min-width: 200px; margin-bottom: 20px;">
+            <h4>Experiencia del cliente</h4>
+            <p><i class="bi bi-send"></i> Contáctanos</p>
+            <p><i class="bi bi-whatsapp"></i> WhatsApp</p>
+            <p><i class="bi bi-envelope"></i> Mail</p>
+        </div>
+        <div style="min-width: 200px; margin-bottom: 20px;">
+            <h4>Información</h4>
+            <p>Envíos</p>
+            <p>Devoluciones</p>
+            <p>Preguntas Frecuentes</p>
+        </div>
+        <div style="min-width: 200px; margin-bottom: 20px;">
+            <h4>ElaraClub</h4>
+            <p>Suscríbete</p>
+            <p>Bases y Condiciones</p>
+            <p>Preguntas frecuentes</p>
+        </div>
+        <div style="min-width: 200px; margin-bottom: 20px;">
+            <h4>Síguenos</h4>
+            <p><i class="bi bi-instagram"></i> @Elara.life</p>
+            <p><i class="bi bi-facebook"></i> @Elara.life</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Función para cargar los favoritos
+function cargarFavoritos() {
+    const contenedor = document.getElementById("favoritos-container");
+    const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    contenedor.innerHTML = "";
+
+    if(favoritos.length === 0) {
+        contenedor.innerHTML = "<p style='margin:20px;'>No tienes favoritos aún.</p>";
+        return;
+    }
+
+    favoritos.forEach((prod, index) => {
+        const div = document.createElement("div");
+        div.classList.add("favorito-item");
+
+        div.innerHTML = `
+            <div class="eliminar" onclick="eliminarFavorito(${index})"><i class="bi bi-x-circle"></i></div>
+            <img src="${prod.imagen}" alt="${prod.nombre}">
+            <h2>${prod.nombre}</h2>
+            <p class="precio">${prod.precio}</p>
+        `;
+
+        contenedor.appendChild(div);
+    });
+}
+
+// Función para eliminar un favorito
+function eliminarFavorito(index) {
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    favoritos.splice(index, 1);
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+    cargarFavoritos();
+}
+
+// Cargar favoritos al iniciar la página
+window.onload = cargarFavoritos;
+</script>
+
+</body>
+</html>

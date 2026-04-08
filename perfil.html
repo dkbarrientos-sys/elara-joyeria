@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil – Elara Life</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <h2 class="logo">Elara Life</h2>
+    <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="coleccion.html">Colección</a></li>
+        <li><a href="buscar.html">Buscar</a></li>
+        <li><a href="favoritos.html">Favoritos</a></li>
+        <li><a href="carrito.html">Carrito</a></li>
+        <li><a href="perfil.html"><i class="bi bi-person"></i></a></li>
+    </ul>
+</nav>
+
+<header class="header">
+    <h1>Mi Perfil</h1>
+    <p class="sub">Crea tu cuenta o inicia sesión</p>
+</header>
+
+<div class="container">
+    <div class="perfil-form">
+        <h2>Registrar Usuario</h2>
+        <input type="text" id="nombre" placeholder="Nombre">
+        <input type="email" id="email" placeholder="Correo electrónico">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button onclick="registrarUsuario()">Registrar</button>
+
+        <h2>Iniciar Sesión</h2>
+        <input type="email" id="loginEmail" placeholder="Correo electrónico">
+        <input type="password" id="loginPassword" placeholder="Contraseña">
+        <button onclick="iniciarSesion()">Iniciar Sesión</button>
+
+        <p id="mensaje"></p>
+    </div>
+</div>
+
+<script>
+function registrarUsuario() {
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if(!nombre || !email || !password) {
+        document.getElementById('mensaje').textContent = "Completa todos los campos";
+        return;
+    }
+
+    let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+    if(usuarios.some(u => u.email === email)) {
+        document.getElementById('mensaje').textContent = "Usuario ya registrado";
+        return;
+    }
+
+    usuarios.push({nombre, email, password});
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+    document.getElementById('mensaje').textContent = "Usuario registrado correctamente";
+    document.getElementById('nombre').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('password').value = '';
+}
+
+function iniciarSesion() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+    const usuario = usuarios.find(u => u.email === email && u.password === password);
+
+    if(usuario) {
+        document.getElementById('mensaje').textContent = `Bienvenido, ${usuario.nombre}!`;
+    } else {
+        document.getElementById('mensaje').textContent = "Correo o contraseña incorrecta";
+    }
+}
+</script>
+
+</body>
+</html>

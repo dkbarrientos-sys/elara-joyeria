@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colección – Elara Life</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        /* Sugerencias debajo del input */
+        .sugerencias {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 200px;
+            z-index: 100;
+        }
+        .sugerencias li {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .sugerencias li:hover {
+            background: #f0f0f0;
+        }
+        nav .menu li {
+            position: relative;
+        }
+        nav input[type="text"] {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <h2 class="logo">Elara Life</h2>
+    <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="coleccion.html">Colección</a></li>
+        <li>
+            <input type="text" placeholder="Buscar..." oninput="buscarProducto(this)">
+            <ul id="sugerencias" class="sugerencias"></ul>
+        </li>
+        <li><a href="favoritos.html"><i class="bi bi-heart"></i></a></li>
+        <li><a href="carrito.html"><i class="bi bi-cart"></i></a></li>
+        <li><a href="perfil.html"><i class="bi bi-person"></i></a></li>
+    </ul>
+</nav>
+
+<header class="header">
+    <h1>COLECCIÓN</h1>
+    <p class="sub">Toda nuestra colección con la elegancia que te hace brillar.</p>
+</header>
+
+<section class="categorias">
+    <a href="pulseras.html" class="cat-card">Pulseras</a>
+    <a href="collares.html" class="cat-card">Collares</a>
+    <a href="anillos.html" class="cat-card">Anillos</a>
+    <a href="aretes.html" class="cat-card">Aretes</a>
+</section>
+
+<script>
+const productos = [
+    {nombre: "Set de pulseras de oro", pagina: "pulseras.html#pulsera1"},
+    {nombre: "Pulsera de plata con corazón", pagina: "pulseras.html#pulsera2"},
+    {nombre: "Pulsera de hilo con dijes", pagina: "pulseras.html#pulsera3"},
+    {nombre: "Pulsera de perla", pagina: "pulseras.html#pulsera4"},
+    {nombre: "Pulsera fina elegante", pagina: "pulseras.html#pulsera5"},
+    {nombre: "Collar dorado con plata", pagina: "collares.html#collar1"},
+    {nombre: "Collar de perlas", pagina: "collares.html#collar2"},
+    {nombre: "Collar con dijes", pagina: "collares.html#collar3"},
+    {nombre: "Collar de hilo con piedras", pagina: "collares.html#collar4"},
+    {nombre: "Set de 2 collares", pagina: "collares.html#collar5"},
+    {nombre: "Aretes de hilo", pagina: "aretes.html#arete1"},
+    {nombre: "Aretes de perla", pagina: "aretes.html#arete2"},
+    {nombre: "Aretes de oro", pagina: "aretes.html#arete3"},
+    {nombre: "Aretes elegantes", pagina: "aretes.html#arete4"},
+    {nombre: "Aretes de plata", pagina: "aretes.html#arete5"},
+    {nombre: "Anillo corazón plata", pagina: "anillos.html#anillo1"},
+    {nombre: "Set de 2 anillos oro", pagina: "anillos.html#anillo2"},
+    {nombre: "Anillo de hilo", pagina: "anillos.html#anillo3"},
+    {nombre: "Anillo oro diamante", pagina: "anillos.html#anillo4"},
+    {nombre: "Anillo de plata", pagina: "anillos.html#anillo5"}
+];
+
+function buscarProducto(input) {
+    const query = input.value.toLowerCase();
+    const sugerencias = document.getElementById("sugerencias");
+    sugerencias.innerHTML = "";
+
+    if(query.length === 0) return;
+
+    const resultados = productos.filter(p => p.nombre.toLowerCase().includes(query));
+    resultados.forEach(r => {
+        const li = document.createElement("li");
+        li.textContent = r.nombre;
+        li.onclick = () => {
+            window.location.href = r.pagina;
+        };
+        sugerencias.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
